@@ -1,0 +1,8 @@
+<% if obj.errors.any? %>
+ <% obj.errors.full_messages.each do |messages| %>
+ <ul>
+   <li>登録に失敗しました下記のメッセージを確認してください</li>
+   <li><%= messages %></li>
+ </ul>
+ <% end %>
+<% end %>

@@ -1,0 +1,55 @@
+<h1>予定一覧</h1>
+<p>本日の日付：<%=Time.now.to_s(:date_jp) %></p>
+<p>予定の合計数：<%=Schedule.count %></p>
+
+<% if flash[:notice] %>
+  <p class= "notice"><%= flash[:notice] %></p>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>タイトル</th>
+      <th>開始日</th>
+      <th>終了日</th>
+      <th>終日</th>
+      <th>更新日時</th>
+      <th>スケジュールメモ</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @schedules.each do |schedule| %>
+      <tr>
+        <td><%= schedule.id %></td>
+        <td><%= schedule.title %></td>
+        <td><%= schedule.startday.to_s(:date_jp) %></td>
+        <td><%= schedule.endday.to_s(:date_jp) %></td>
+        <td>
+            <%= if schedule.allday == true
+                   schedule.allday = "○"
+                else schedule.allday = ""
+                end
+            %>
+        </td>
+        <td><%= schedule.updated_at.to_s(:datetime_jp)%></td>
+        <td><%= schedule.memo %></td>
+        <td>
+         <%= link_to "詳細", schedule %>
+        </td>
+        <td>
+         <%= link_to "編集", [:edit, schedule] %>
+        </td>
+        <td>
+         <%= link_to "削除", schedule, method: :delete, data: {confirm: "本当に削除しますか?"} %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table> 
+
+<p><%= link_to "予定登録へ", :new_schedule %></p>
